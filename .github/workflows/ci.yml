@@ -1,0 +1,48 @@
+# Thin caller — restore, build and test live in aeroflow-workflows.
+# Pin a release tag, never @main.
+#
+# Org GITHUB_TOKEN is read-only by default; keep job-level permissions
+# explicit and minimal on both the caller and the reusable workflow.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    uses: aeroflow-air/aeroflow-workflows/.github/workflows/dotnet-ci.yml@v0.5.0
+    with:
+      solution: AeroFlow.ServiceDefaults.sln
+    permissions:
+      contents: read
+
+  pack:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Pack
+        run: dotnet pack AeroFlow.ServiceDefaults.sln --configuration Release --output artifacts
+
+      - name: Upload nupkgs
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkgs
+          path: artifacts/*.nupkg
+          if-no-files-found: error

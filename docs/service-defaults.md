@@ -1,10 +1,10 @@
 # ServiceDefaults: logging conventions and event catalogue
 
-Status: the package lives in this repository at `src/AeroFlow.ServiceDefaults` (version 0.1.0). Design: [ADR-0022](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/decisions/0022-observability-on-the-golden-path.md) and the [observability design page](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/design/observability.md).
+Status: this is the `lib-service-defaults` repository. The version in the project file is 0.1.0; published versions come from `vMAJOR.MINOR.PATCH` tags on GitHub Packages. Design: [ADR-0022](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/decisions/0022-observability-on-the-golden-path.md) and the [observability design page](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/design/observability.md).
 
-This is the golden-path observability package, promoted from `AeroFlow.Local.ServiceDefaults` in aeroflow-local. There is no `lib-*` repo and no NuGet feed in the organisation yet, so the package is housed here — the place ADR-0014 already pointed to ("until published from the template"). The recommended long-term home is a new `lib-service-defaults` repository that publishes `AeroFlow.ServiceDefaults` and `AeroFlow.ServiceDefaults.Testing` to GitHub Packages. This record does not create that repo.
+This is the golden-path observability package, promoted from `AeroFlow.Local.ServiceDefaults` in aeroflow-local and first housed in [`template-dotnet-service`](https://github.com/aeroflow-air/template-dotnet-service) (PRs #21 and #23, `main` at `50aac82`). It is published from this repository as `AeroFlow.ServiceDefaults` and `AeroFlow.ServiceDefaults.Testing`. How to add the feed and authenticate is in the [README](../README.md).
 
-The template service calls `AddServiceDefaults()` in `Program.cs`. Existing `svc-*` services are a later follow-up.
+The template service already calls `AddServiceDefaults()` via a project reference. Live `svc-*` services currently use a local package feed. Switching both to this GitHub Packages feed follows once `v0.1.0` is published.
 
 ## What the package emits
 
@@ -112,4 +112,4 @@ host.Logs
 
 ## Versioning and publish
 
-The package version is **0.1.0**, set in the project file. `dotnet pack src/AeroFlow.ServiceDefaults/AeroFlow.ServiceDefaults.csproj` produces the nupkg; nothing is published yet, because the organisation has no GitHub Packages (NuGet) workflow. When `lib-service-defaults` exists, versions should follow the same tagged-release habit as `aeroflow-workflows`.
+Versions follow [SemVer](https://semver.org/). A `vMAJOR.MINOR.PATCH` tag on `main` publishes both nupkgs to GitHub Packages. See the [README](../README.md#versioning-and-release) for the release process and how to consume a version.

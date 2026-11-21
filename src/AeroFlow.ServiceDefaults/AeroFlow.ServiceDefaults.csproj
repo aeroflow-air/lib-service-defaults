@@ -9,7 +9,7 @@
     <Authors>AeroFlow</Authors>
     <PackageTags>aeroflow;opentelemetry;logging;observability</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/aeroflow-air/template-dotnet-service</RepositoryUrl>
+    <RepositoryUrl>https://github.com/aeroflow-air/lib-service-defaults</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IsPackable>true</IsPackable>

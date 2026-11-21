@@ -1,8 +1,8 @@
 # AeroFlow.ServiceDefaults
 
-Golden-path observability for AeroFlow .NET services ([ADR-0022](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/decisions/0022-observability-on-the-golden-path.md)). It is the shared package promoted from `AeroFlow.Local.ServiceDefaults` in aeroflow-local.
+Golden-path observability for AeroFlow .NET services ([ADR-0022](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/decisions/0022-observability-on-the-golden-path.md)). Promoted from `AeroFlow.Local.ServiceDefaults` in aeroflow-local.
 
-Version **0.1.0**. This package currently lives in `template-dotnet-service` because the organisation has no `lib-*` repository and no NuGet feed yet. The intended long-term home is a new `lib-service-defaults` repo that publishes this package (and `AeroFlow.ServiceDefaults.Testing`) to GitHub Packages. Until then, consume it as a project reference.
+This package is published from [`lib-service-defaults`](https://github.com/aeroflow-air/lib-service-defaults) to GitHub Packages. How to add the feed, authenticate, and reference a version is in that repository's [README](https://github.com/aeroflow-air/lib-service-defaults#consume).
 
 ## What it provides
 
@@ -17,4 +17,4 @@ Call `builder.AddServiceDefaults()` and `app.MapDefaultEndpoints()`:
 
 Analyser defaults also flow to consumers: CA1848 and CA2254 as errors, and `System.Console` banned in favour of `ILogger` / `[LoggerMessage]`.
 
-See [docs/service-defaults.md](../../docs/service-defaults.md) for the event catalogue, field names, configuration and a business-event example. The contract-test helper is `AeroFlow.ServiceDefaults.Testing`.
+See [docs/service-defaults.md](https://github.com/aeroflow-air/lib-service-defaults/blob/main/docs/service-defaults.md) for the event catalogue, field names, configuration and a business-event example. The contract-test helper is `AeroFlow.ServiceDefaults.Testing`.

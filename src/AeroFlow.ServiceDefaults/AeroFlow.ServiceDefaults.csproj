@@ -5,7 +5,7 @@
     <AssemblyName>AeroFlow.ServiceDefaults</AssemblyName>
     <Description>Golden-path OpenTelemetry, health checks, structured platform logs and logging analysers for AeroFlow services (ADR-0022).</Description>
     <PackageId>AeroFlow.ServiceDefaults</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>AeroFlow</Authors>
     <PackageTags>aeroflow;opentelemetry;logging;observability</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -36,6 +36,16 @@
     <None Include="build\AeroFlow.ServiceDefaults.props" Pack="true" PackagePath="build\" />
     <None Include="build\BannedSymbols.txt" Pack="true" PackagePath="build\" />
     <None Include="buildTransitive\AeroFlow.ServiceDefaults.props" Pack="true" PackagePath="buildTransitive\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Must flow to PackageReference consumers. A PackageReference added only from
+         this package's .props is visible to MSBuild but is not restored, so RS0030
+         never ran for 0.1.0 consumers. PrivateAssets=all would also hide it from the nuspec. -->
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4">
+      <PrivateAssets>none</PrivateAssets>
+      <IncludeAssets>analyzers;build;buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

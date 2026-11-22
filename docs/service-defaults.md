@@ -1,10 +1,10 @@
 # ServiceDefaults: logging conventions and event catalogue
 
-Status: this is the `lib-service-defaults` repository. The version in the project file is 0.1.0; published versions come from `vMAJOR.MINOR.PATCH` tags on GitHub Packages. Design: [ADR-0022](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/decisions/0022-observability-on-the-golden-path.md) and the [observability design page](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/design/observability.md).
+Status: this is the `lib-service-defaults` repository. The version in the project file is 0.1.1; published versions come from `vMAJOR.MINOR.PATCH` tags on GitHub Packages (`v0.1.0` is already published). Design: [ADR-0022](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/decisions/0022-observability-on-the-golden-path.md) and the [observability design page](https://github.com/aeroflow-air/platform-handbook/blob/main/docs/design/observability.md).
 
 This is the golden-path observability package, promoted from `AeroFlow.Local.ServiceDefaults` in aeroflow-local and first housed in [`template-dotnet-service`](https://github.com/aeroflow-air/template-dotnet-service) (PRs #21 and #23, `main` at `50aac82`). It is published from this repository as `AeroFlow.ServiceDefaults` and `AeroFlow.ServiceDefaults.Testing`. How to add the feed and authenticate is in the [README](../README.md).
 
-The template service already calls `AddServiceDefaults()` via a project reference. Live `svc-*` services currently use a local package feed. Switching both to this GitHub Packages feed follows once `v0.1.0` is published.
+The template and live `svc-*` services are switching from an in-repo copy or local package feed to this GitHub Packages feed at 0.1.1, which is the first version where RS0030 (`System.Console`) is actually enforced for PackageReference consumers.
 
 ## What the package emits
 
@@ -47,7 +47,7 @@ The category for all platform lines is `AeroFlow.ServiceDefaults`.
 
 ## Business events: conventions and example
 
-- Use source-generated `[LoggerMessage]` with a **fixed event id** at or above 10,000, a static message template, and named properties. CA1848 and CA2254 are errors in any project that imports this package's props.
+- Use source-generated `[LoggerMessage]` with a **fixed event id** at or above 10,000, a static message template, and named properties. CA1848, CA2254 and RS0030 are errors in any project that references this package (0.1.1 or later).
 - Put the methods in a `sealed partial` static class next to the edge that calls them (a controller, processor or worker). Do not log from `Domain`.
 - Reuse the canonical field names in `LogFields` when the value is one of those (`flight.id` can be a parameter named `flightId` plus a scope, or a call to `IObservabilityLog` which already adds the scope).
 - Do not log PII, secrets, tokens, connection strings or request bodies. Flight number and flight id are allowed.

@@ -5,7 +5,7 @@
     <AssemblyName>AeroFlow.ServiceDefaults.Testing</AssemblyName>
     <Description>Log collector and contract assertions for AeroFlow.ServiceDefaults (ADR-0022).</Description>
     <PackageId>AeroFlow.ServiceDefaults.Testing</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>AeroFlow</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/aeroflow-air/lib-service-defaults</RepositoryUrl>

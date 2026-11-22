@@ -35,7 +35,7 @@ In the consuming repo:
 Then add a `PackageReference`:
 
 ```xml
-<PackageReference Include="AeroFlow.ServiceDefaults" Version="0.1.0" />
+<PackageReference Include="AeroFlow.ServiceDefaults" Version="0.1.1" />
 ```
 
 Test projects that use the contract helper also reference `AeroFlow.ServiceDefaults.Testing` at the same version.
@@ -65,7 +65,21 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-If the job calls `aeroflow-workflows` `dotnet-ci.yml`, that reusable workflow does not currently pass a GitHub Packages source. Until it does, either restore with `source-url` / `NUGET_AUTH_TOKEN` in the caller before using a local build job, or extend the reusable workflow in a follow-up.
+If the job calls `aeroflow-workflows` `dotnet-ci.yml`, pin `@v0.6.0` or later (current latest is `@v0.7.0`), set `github-packages: true`, and grant `packages: read` on the calling job (required for every `@v0.6.0+` caller, even when the input is false):
+
+```yaml
+jobs:
+  build-and-test:
+    uses: aeroflow-air/aeroflow-workflows/.github/workflows/dotnet-ci.yml@v0.7.0
+    with:
+      solution: Your.Service.sln
+      github-packages: true
+    permissions:
+      contents: read
+      packages: read
+```
+
+Existing `@v0.5.0` pins are unchanged and cannot restore this feed.
 
 ### Local development
 
@@ -85,6 +99,19 @@ dotnet nuget add source https://nuget.pkg.github.com/aeroflow-air/index.json \
 
 If you already have the `aeroflow-air` source, update the credentials instead of adding it twice.
 
+For Docker restores, pass the same token as a BuildKit secret and keep the token out of the image. A committed `nuget.config` may use `%NUGET_AUTH_TOKEN%` as a credential placeholder (that is not the token itself):
+
+```bash
+export NUGET_AUTH_TOKEN=...   # PAT with read:packages; do not commit this
+docker build --secret id=nuget_auth_token,env=NUGET_AUTH_TOKEN -t your-service .
+```
+
+```dockerfile
+RUN --mount=type=secret,id=nuget_auth_token \
+    NUGET_AUTH_TOKEN="$(cat /run/secrets/nuget_auth_token)" \
+    dotnet restore Your.Service.sln
+```
+
 ## Develop
 
 Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
@@ -100,7 +127,7 @@ dotnet pack AeroFlow.ServiceDefaults.sln -c Release -o artifacts
 - Land changes on `main` through a pull request (CI restores, builds, tests and packs).
 - Publishing is tag-triggered. After the publish workflow is on `main`, create an annotated tag `vMAJOR.MINOR.PATCH` on the commit you want to release (for example `v0.1.0`). Do not retag a version that has already been pushed; GitHub Packages versions are immutable (`--skip-duplicate`).
 - The publish workflow builds and tests, packs both nupkgs with the version from the tag (the leading `v` is stripped), and pushes them to `nuget.pkg.github.com/aeroflow-air` using `GITHUB_TOKEN` (`packages: write`).
-- The first published version should be `v0.1.0`, matching the version already in the project file and in the temporary local feeds some services already use.
+- `v0.1.0` is published. The next release is `v0.1.1`, a patch so PackageReference consumers actually get the banned-API analyser (see CHANGELOG). Do not move or retag `v0.1.0`.
 
 ## CI
 

@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroFlow.ServiceDefaults.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroFlow.ServiceDefaults.Tests", "tests\AeroFlow.ServiceDefaults.Tests\AeroFlow.ServiceDefaults.Tests.csproj", "{ECC3687B-0140-4952-AD80-BEFA4958FB33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroFlow.ServiceDefaults.Packaging.Tests", "tests\AeroFlow.ServiceDefaults.Packaging.Tests\AeroFlow.ServiceDefaults.Packaging.Tests.csproj", "{B3A7C1E2-8D4F-4A91-9C2E-7F6B1A0D5E44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +28,9 @@ Global
 		{ECC3687B-0140-4952-AD80-BEFA4958FB33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECC3687B-0140-4952-AD80-BEFA4958FB33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC3687B-0140-4952-AD80-BEFA4958FB33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A7C1E2-8D4F-4A91-9C2E-7F6B1A0D5E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A7C1E2-8D4F-4A91-9C2E-7F6B1A0D5E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A7C1E2-8D4F-4A91-9C2E-7F6B1A0D5E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A7C1E2-8D4F-4A91-9C2E-7F6B1A0D5E44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
